@@ -32,3 +32,5 @@ pip3 install ultralytics
 Ultralytics has some documentation on [how to create a custom dataset](https://docs.ultralytics.com/datasets/#contribute-new-datasets)
 
 The main work involves converting the dataset organization / annotation formats to [Ultralytics YOLO TXT format](https://docs.ultralytics.com/datasets/detect/)
+
+nuImages has much richer, complex annotations for each image than YOLO's simplistic 2d bounding boxes. Therefore converting from nuImages to YOLO format will be lossy. For example, nuImages gives each object a 'category' and an 'attribte', where attribute describes a temporary state. For the `human.pedestrian.adult` category, one of the following attributes are also included: `pedestrian.standing`, `pedestrian.moving`, `pedestrian.sitting_lying`.
