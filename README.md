@@ -26,3 +26,9 @@ The [ultralytics/ultralytics](https://github.com/ultralytics/ultralytics) librar
 ```
 pip3 install ultralytics
 ```
+
+## Creating a new dataset format 
+
+Ultralytics has some documentation on [how to create a custom dataset](https://docs.ultralytics.com/datasets/#contribute-new-datasets)
+
+The main work involves converting the dataset organization / annotation formats to [Ultralytics YOLO TXT format](https://docs.ultralytics.com/datasets/detect/)
