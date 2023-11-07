@@ -4,9 +4,19 @@ NuImages is a 93,000-image dataset for self-driving that provides segmentation a
 
 We will use the 2D bounding box annotations to train YOLOv8's detection model. We will not use the segmentation data.
 
+This guide was created on PopOS 22.04 and is expected to work on Ubuntu.
+
 ## Download NuImages
 
 1. Go to https://www.nuscenes.org/nuimages and request download access by creating an account.
 2. Once logged in, navigate to https://www.nuscenes.org/nuimages#download
-3. Download 2 files: All->Metadata (0.59GB) and All->Samples (15.27GB). No need to download All->Sweeps.
+3. Download two files: All->Metadata (0.59GB) and All->Samples (15.27GB). No need to download All->Sweeps.
 
+## Install NuScenes Devkit
+
+1. Go to https://github.com/nutonomy/nuscenes-devkit
+2. Clone the repository to download the tutorial jupyter notebook: `git clone git@github.com:nutonomy/nuscenes-devkit.git`
+3. Download the python package: `pip3 install nuscenes-devkit`
+4. Follow the 'nuImages' section of the README for a [tutorial](https://github.com/nutonomy/nuscenes-devkit#nuimages)
+
+ 
