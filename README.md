@@ -33,4 +33,30 @@ Ultralytics has some documentation on [how to create a custom dataset](https://d
 
 The main work involves converting the dataset organization / annotation formats to [Ultralytics YOLO TXT format](https://docs.ultralytics.com/datasets/detect/)
 
-nuImages has much richer, complex annotations for each image than YOLO's simplistic 2d bounding boxes. Therefore converting from nuImages to YOLO format will be lossy. For example, nuImages gives each object a 'category' and an 'attribte', where attribute describes a temporary state. For the `human.pedestrian.adult` category, one of the following attributes are also included: `pedestrian.standing`, `pedestrian.moving`, `pedestrian.sitting_lying`.
+### Considerations When Converting Annotations
+
+Generally, nuImages has much richer, complex annotations for each image than YOLO's simplistic 2d bounding boxes. Therefore converting from nuImages to YOLO format will be lossy
+
+nuImages contains `object` and `surface` annotations. We use `object` only. The `surface` annotations refers to segmentations of the road
+
+nuImages gives each object a 'category' and an 'attribte', where attribute describes a temporary state.
+To illustrate, `human.pedestrian.adult` category, one of the following attributes are also included: `pedestrian.standing`, `pedestrian.moving`, `pedestrian.sitting_lying`.
+
+The following table describes the lossy assignment of nuImages objects categories & attributes to YOLO categories. Note that the choices made here are focused toward ADAS development and may not be optimal for general purpose uses.
+
+nuImages Category(s) | nuImages Attribute(s) | YOLO Category 
+--- | --- | ---
+`human.pedestrian.adult` | all except `pedestrian.sitting_lying` | `pedestrian`
+`human.pedestrian.adult` | `pedestrian.sitting_lying` | none
+`human.pedestrian.construction` | any | `pedestrian`
+
+`vehicle.car` | any | `car`
+`vehicle.truck` | any | `truck`
+`vehicle.bicycle` | `cycle.with_rider` | `cyclist`
+`vehicle.bicycle` | `cycle.without_rider` | `bicycle`
+`vehicle.motorcycle` | `cycle.with_rider` | `motorcyclist`
+`vehicle.motorcycle` | `cycle.without_rider` | `motorcycle`
+`vehicle.bus.rigid` | any | `bus`
+`movable_object.`... | any | none
+
+
