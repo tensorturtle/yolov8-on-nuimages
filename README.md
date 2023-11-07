@@ -49,7 +49,6 @@ nuImages Category(s) | nuImages Attribute(s) | YOLO Category
 `human.pedestrian.adult` | all except `pedestrian.sitting_lying` | `pedestrian`
 `human.pedestrian.adult` | `pedestrian.sitting_lying` | none
 `human.pedestrian.construction` | any | `pedestrian`
-
 `vehicle.car` | any | `car`
 `vehicle.truck` | any | `truck`
 `vehicle.bicycle` | `cycle.with_rider` | `cyclist`
