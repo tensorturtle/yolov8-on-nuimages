@@ -21,6 +21,8 @@ This guide was created on PopOS 22.04 with NVIDIA RTX2070S GPU. It is expected t
 
 ## Install YOLOv8
 
+The [ultralytics/ultralytics] library provides all of the functionality we need as a command line tool, without touching any real code.
+
 ```
 pip3 install ultralytics
 ```
