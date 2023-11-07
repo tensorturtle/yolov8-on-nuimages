@@ -70,16 +70,34 @@ The following table describes the lossy assignment of nuImages objects categorie
 
 nuImages Category(s) | nuImages Attribute(s) | YOLO Category 
 --- | --- | ---
+`animal` | all | none
 `human.pedestrian.adult` | all except `pedestrian.sitting_lying` | `pedestrian`
-`human.pedestrian.adult` | `pedestrian.sitting_lying` | none
-`human.pedestrian.construction` | any | `pedestrian`
-`vehicle.car` | any | `car`
-`vehicle.truck` | any | `truck`
+`human.pedestrian.adult` | `pedestrian.sitting_lying` | none; Not a moving concern
+`human.pedestrian.child` | all except `pedestrian.sitting_lying` | `pedestrian`
+`human.pedestrian.child` | `pedestrian.sitting_lying` | none; Not a moving concern
+`human.pedestrian.construction_worker` | any | `pedestrian`
+`human.pedestrian.personal_mobility` | any | `uprightmobility`
+`human.pedestrian.police_officer` | any | `pedestrian`
+`human.pedestrian.stroller` | any | `stroller`
+`human.pedestrian.wheelchair` | any | `wheelchair`
+`movable_object.barrier` | any | none; Too broad
+`movable_object.pushable_pullable` | any | none; Too broad
+`movable_object.debris` | any | none; Too broad
+`movable_object.trafficcone` | any | `trafficcone`
+`static_object.bicycle_rack` | any | none; Too broad
 `vehicle.bicycle` | `cycle.with_rider` | `cyclist`
 `vehicle.bicycle` | `cycle.without_rider` | `bicycle`
+`vehicle.bus.bendy` | any | `bus`; Each section is labeled as a separate bus
+`vehicle.bus.rigid` | any | `bus`
+`vehicle.car` | any | `car`
+`vehicle.construction` | any | none; Too broad and generally stationary
+`vehicle.ego` | any | none; Purposefully ignore
+`vehicle.emergency.ambulance` | any | `ambulance`
+`vehicle.emergency.police` | any | none; Too broad (all types of police vehicles)
 `vehicle.motorcycle` | `cycle.with_rider` | `motorcyclist`
 `vehicle.motorcycle` | `cycle.without_rider` | `motorcycle`
-`vehicle.bus.rigid` | any | `bus`
-`movable_object.`... | any | none
+`vehicle.trailer` | any | none; Too broad (for trucks, cars, bikes)
+`vehicle.truck` | any | `truck`
+
 
 
