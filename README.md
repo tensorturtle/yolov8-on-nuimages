@@ -63,8 +63,7 @@ Generally, nuImages has much richer, complex annotations for each image than YOL
 
 nuImages contains `object` and `surface` annotations. We use `object` only. The `surface` annotations refers to segmentations of the road
 
-nuImages gives each object a 'category' and an 'attribte', where attribute describes a temporary state.
-To illustrate, `human.pedestrian.adult` category, one of the following attributes are also included: `pedestrian.standing`, `pedestrian.moving`, `pedestrian.sitting_lying`.
+nuImages gives each object a 'category' and an 'attribte', where attribute describes a temporary state. As an example, for the `human.pedestrian.adult` category, one of the following attributes are also included: `pedestrian.standing`, `pedestrian.moving`, `pedestrian.sitting_lying`.
 
 The following table describes the lossy assignment of nuImages objects categories & attributes to YOLO categories. Note that the choices made here are focused toward ADAS development and may not be optimal for general purpose uses.
 
