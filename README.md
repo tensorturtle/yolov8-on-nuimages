@@ -12,6 +12,30 @@ This guide was created on PopOS 22.04 with NVIDIA RTX2070S GPU. It is expected t
 2. Once logged in, navigate to https://www.nuscenes.org/nuimages#download
 3. Download two files: All->Metadata (0.59GB) and All->Samples (15.27GB). No need to download All->Sweeps.
 
+The two downloaded files:
+```
+~/Downloads
+├── nuimages-v1.0-all-metadata.tgz
+└── nuimages-v1.0-all-samples.tgz
+```
+
+Unpack them:
+```
+tar -xvf nuimages-v1.0-all-metadata.tgz
+tar -xvf nuimages-v1.0-all-samples.tgz
+```
+
+We now have 5 new directories. Move them to a convenient location. We'll call that directory `nuimages_root`
+```
+nuimages_root
+├── samples
+├── v1.0-mini
+├── v1.0-test
+├── v1.0-train
+└── v1.0-val
+```
+
+
 ## Install NuScenes Devkit
 
 1. Go to https://github.com/nutonomy/nuscenes-devkit
