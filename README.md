@@ -99,4 +99,4 @@ nuImages Category(s) | nuImages Attribute(s) | YOLO Category
 `vehicle.truck` | any | `truck`
 
 
-
+Bounding box [xmin, ymin, xmax, ymax]
