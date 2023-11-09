@@ -77,7 +77,7 @@ INFO:root:Converting and writing val annotations...
 INFO:root:Done! Results in output directory: nuImagesYoloDataset
 ```
 
-The `nuImagesYoloDataset` directory contains everything you need to train YOLov8.
+The `nuImagesYoloDataset` directory contains everything you need to train YOLOv8.
 
 ## Train YOLOv8
 
