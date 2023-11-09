@@ -51,6 +51,8 @@ Two arguments are required:
 python3 convert.py --nuim-root=/path/to/NUIM_ROOT --output-root=/path/to/new/dataset
 ```
 
+Live progress bars will be shown. The total runtime is less than 1 minute
+
 Typical output:
 ```
 $ python3 convert.py --nuim-root ~/DatasetsPublic/nuimages-full --output-root ~/nuim_for_yolov8
