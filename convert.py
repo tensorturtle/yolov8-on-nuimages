@@ -23,6 +23,10 @@ def mkdir_output_dirs(p: Path):
     (p / 'val' / 'images').mkdir(parents=True, exist_ok=True)
     (p / 'val' / 'labels').mkdir(parents=True, exist_ok=True)
 
+    (p / 'test').mkdir(parents=True, exist_ok=True)
+    (p / 'test' / 'images').mkdir(parents=True, exist_ok=True)
+    (p / 'test' / 'labels').mkdir(parents=True, exist_ok=True)
+
 def move_sample(sample, set_type: str, nuim: NuImages, nuim_root: Path, output_root: Path):
     sample_data_token = sample['key_camera_token']
     sample_data = nuim.get("sample_data", sample_data_token)
@@ -138,24 +142,26 @@ NUIM_ROOT
 
     if args.only_images:
         logger.info("Only moving images.")
-        for set_type in ["train", "val"]:
+        for set_type in ["train", "val", "test"]:
             move_set(set_type, Path(args.nuim_root), Path(args.output_root))
         
         logger.info(f"Done! Results in output directory: {Path(args.output_root)}")
         exit(0)
 
     if args.only_annotations:
+        # obviously, "test" has no annotations
         logger.info("Only converting and writing annotations.")
         for set_type in ["train", "val"]:
             convert_set_ann(set_type, Path(args.nuim_root), Path(args.output_root))
         logger.info(f"Done! Results in output directory: {Path(args.output_root)}")
         exit(0)
 
-    for set_type in ["train", "val"]:
+    for set_type in ["train", "val", "test"]:
         logger.info(f"Moving {set_type} images...")
         move_set(set_type, Path(args.nuim_root), Path(args.output_root))
     
     for set_type in ["train", "val"]:
+        # obviously, "test" has no annotations
         logger.info(f"Converting and writing {set_type} annotations...")
         convert_set_ann(set_type, Path(args.nuim_root), Path(args.output_root))
     
