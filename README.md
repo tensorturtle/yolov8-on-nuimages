@@ -1,5 +1,7 @@
 # Train [YOLOv8](https://github.com/ultralytics/ultralytics) on [NuImages Dataset](https://www.nuscenes.org/nuimages)
 
+[![Run Unit Test via Pytest](https://github.com/tensorturtle/yolov8-on-nuimages/actions/workflows/run_unit_tests.yml/badge.svg)](https://github.com/tensorturtle/yolov8-on-nuimages/actions/workflows/run_unit_tests.yml)
+
 NuImages is a 93,000-image dataset for self-driving that provides segmentation and 2D bounding boxes.
 
 We will use the 2D bounding box annotations to train YOLOv8's detection model. We will not use the segmentation data.
