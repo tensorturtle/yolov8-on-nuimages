@@ -1,10 +1,11 @@
-name: Run Unit Test via Pytest  
+name: Unit tests 
   
-push:
-  branches:
-    - master
-  paths-ignore:
-    - '**/README.md'
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '**/README.md'
 
 jobs:  
   build:  
