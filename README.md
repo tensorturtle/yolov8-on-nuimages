@@ -10,6 +10,8 @@ This guide was created on PopOS 22.04 with NVIDIA RTX2070S GPU. It is expected t
 
 ```
 git clone git@github.com:tensorturtle/yolov8-on-nuimages.git
+
+cd yolov8-on-nuimages
 ```
 
 ## Download NuImages
