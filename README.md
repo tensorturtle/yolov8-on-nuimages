@@ -150,5 +150,6 @@ nuImages Category(s) | nuImages Attribute(s) | YOLO Category
 `vehicle.trailer` | any | none; Too broad (for trucks, cars, bikes)
 `vehicle.truck` | any | `truck`
 
-### Overall Strategy
-x
+# Future Features
+
++ [ ] Segmentation
