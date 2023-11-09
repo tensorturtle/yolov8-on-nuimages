@@ -45,18 +45,17 @@ pip3 install -r requirements.txt
 
 Two arguments are required:
 + `--nuim-root`: The directory where nuimages metadata and samples directories are located. Path to `NUIM_ROOT` above
-+ `--output-root`: The directory to which this script will output a YOLO TXT-formatted dataset
 
 ```
-python3 convert.py --nuim-root=/path/to/NUIM_ROOT --output-root=/path/to/new/dataset
+python3 convert.py --nuim-root=/path/to/NUIM_ROOT
 ```
 
 Live progress bars will be shown. The total runtime is less than 1 minute
 
 Typical output:
 ```
-$ python3 convert.py --nuim-root ~/DatasetsPublic/nuimages-full --output-root ~/nuim_for_yolov8
-INFO:root:Creating output directories at: /home/tensorturtle/nuim_for_yolov8...
+$ python3 convert.py --nuim-root ~/DatasetsPublic/nuimages-full
+INFO:root:Creating output directories at: nuImagesYoloDataset...
 INFO:root:Moving train images...
 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 67279/67279 [00:04<00:00, 14277.85it/s]
 INFO:root:Moving val images...
@@ -67,7 +66,21 @@ INFO:root:Converting and writing train annotations...
 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 557715/557715 [00:21<00:00, 25911.76it/s]
 INFO:root:Converting and writing val annotations...
 100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 136074/136074 [00:04<00:00, 28257.51it/s]
-INFO:root:Done! Results in output directory: /home/tensorturtle/nuim_for_yolov8
+INFO:root:Done! Results in output directory: nuImagesYoloDataset
+```
+
+The `nuImagesYoloDataset` directory contains everything you need to train YOLov8.
+
+## Train YOLOv8
+
+Install Python library / CLI tool for YOLOv8:
+```
+pip3 install ultralytics
+```
+
+As an example, we'll train a YOLOv8n model on our newly created dataset:
+```
+yolo detect train data=nuImagesYoloDataset/nuimages.yaml model=yolov8n.pt epochs=100 imgsz=640
 ```
 
 # Development Help & Implementation Details
