@@ -1,3 +1,4 @@
 nuscenes-devkit
 tqdm
 numpy
+pytest
