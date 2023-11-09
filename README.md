@@ -55,14 +55,14 @@ Two arguments are required:
 + `--nuim-root`: The directory where nuimages metadata and samples directories are located. Path to `NUIM_ROOT` above
 
 ```
-python3 convert.py --nuim-root=/path/to/NUIM_ROOT
+python3 convert.py --nuim-root=/abs/path/to/NUIM_ROOT
 ```
 
 Live progress bars will be shown. The total runtime is less than 1 minute
 
 Typical output:
 ```
-$ python3 convert.py --nuim-root ~/DatasetsPublic/nuimages-full
+$ python3 convert.py --nuim-root=/home/tensorturtle/DatasetsPublic/nuimages-full
 INFO:root:Creating output directories at: nuImagesYoloDataset...
 INFO:root:Moving train images...
 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 67279/67279 [00:04<00:00, 14277.85it/s]
