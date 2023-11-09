@@ -25,9 +25,9 @@ tar -xvf nuimages-v1.0-all-metadata.tgz
 tar -xvf nuimages-v1.0-all-samples.tgz
 ```
 
-We now have 5 new directories. Move them to a convenient location. We'll call that directory `nuimages_root`
+We now have 5 new directories. Move them to a convenient location. We'll call that directory `NUIM_ROOT`
 ```
-nuimages_root
+NUIM_ROOT
 ├── samples
 ├── v1.0-mini
 ├── v1.0-test
@@ -35,21 +35,50 @@ nuimages_root
 └── v1.0-val
 ```
 
+## Install Python packages
+
+```
+pip3 install -r requirements.txt
+```
+
+## Run script
+
+Two arguments are required:
++ `--nuim-root`: The directory where nuimages metadata and samples directories are located. Path to `NUIM_ROOT` above
++ `--output-root`: The directory to which this script will output a YOLO TXT-formatted dataset
+
+```
+python3 convert.py --nuim-root=/path/to/NUIM_ROOT --output-root=/path/to/new/dataset
+```
+
+Typical output:
+```
+$ python3 convert.py --nuim-root ~/DatasetsPublic/nuimages-full --output-root ~/nuim_for_yolov8
+INFO:root:Creating output directories at: /home/tensorturtle/nuim_for_yolov8...
+INFO:root:Moving train images...
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 67279/67279 [00:04<00:00, 14277.85it/s]
+INFO:root:Moving val images...
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 16445/16445 [00:01<00:00, 14548.88it/s]
+INFO:root:Moving test images...
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9752/9752 [00:00<00:00, 14908.98it/s]
+INFO:root:Converting and writing train annotations...
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 557715/557715 [00:21<00:00, 25911.76it/s]
+INFO:root:Converting and writing val annotations...
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 136074/136074 [00:04<00:00, 28257.51it/s]
+INFO:root:Done! Results in output directory: /home/tensorturtle/nuim_for_yolov8
+```
+
+# Development Help & Implementation Details
 
 ## Install NuScenes Devkit
 
-1. Go to https://github.com/nutonomy/nuscenes-devkit
-2. Clone the repository to download the tutorial jupyter notebook: `git clone git@github.com:nutonomy/nuscenes-devkit.git`
-3. Download the python package: `pip3 install nuscenes-devkit`
-4. Follow the 'nuImages' section of the README for a [tutorial](https://github.com/nutonomy/nuscenes-devkit#nuimages)
+`convert.py` uses `from nuimages import NuImages` package to read annotation data.
 
-## Install YOLOv8
+A tutorial for that package is available at: https://github.com/nutonomy/nuscenes-devkit
 
-The [ultralytics/ultralytics](https://github.com/ultralytics/ultralytics) library provides all of the functionality we need as a command line tool, without touching any real code.
-
-```
-pip3 install ultralytics
-```
+1. Clone the repository to download the tutorial jupyter notebook: `git clone git@github.com:nutonomy/nuscenes-devkit.git`
+2. Download the python package: `pip3 install nuscenes-devkit`
+3. Follow the 'nuImages' section of the README for a [tutorial](https://github.com/nutonomy/nuscenes-devkit#nuimages)
 
 ## Creating a new dataset format 
 
@@ -97,9 +126,6 @@ nuImages Category(s) | nuImages Attribute(s) | YOLO Category
 `vehicle.motorcycle` | `cycle.without_rider` | `motorcycle`
 `vehicle.trailer` | any | none; Too broad (for trucks, cars, bikes)
 `vehicle.truck` | any | `truck`
-
-
-Bounding box [xmin, ymin, xmax, ymax]
 
 ### Overall Strategy
 x
