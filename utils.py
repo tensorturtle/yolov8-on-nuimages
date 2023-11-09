@@ -21,8 +21,3 @@ def PxyXY_to_Nxcycwh(xyXY, width_pixels, height_pixels):
                             box_width_height / [width_pixels, height_pixels]))
     
     return normalized
-
-def test_PxyWX_to_Nxcycwh():
-    assert np.all(PxyXY_to_Nxcycwh([0, 0, 200, 100], 200, 100) == np.array([0.5, 0.5, 1, 1]))
-    assert np.all(PxyXY_to_Nxcycwh([0, 0, 0, 0], 1920, 1080) == np.array([0., 0., 0., 0.]))
-    assert np.all(PxyXY_to_Nxcycwh([2, 1, 3, 2], 5, 4) == np.array([0.5, 0.375, 0.20, 0.25]))

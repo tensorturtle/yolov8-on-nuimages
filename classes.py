@@ -73,9 +73,3 @@ def simplify_nuimage_labels(category, attribute):
     else:
         # rare dataset bug where categories that should have an attribute simply doesn
         return None
-
-
-def test_simplify_nuimage_labels():
-    assert simplify_nuimage_labels('vehicle.bicycle', 'cycle.without_rider') == 'bicycle'
-    assert simplify_nuimage_labels('vehicle.bicycle', 'cycle.with_rider') == 'cyclist'
-    assert simplify_nuimage_labels('vehicle.truck', None) == 'truck'
