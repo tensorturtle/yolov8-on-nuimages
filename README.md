@@ -25,9 +25,9 @@ tar -xvf nuimages-v1.0-all-metadata.tgz
 tar -xvf nuimages-v1.0-all-samples.tgz
 ```
 
-We now have 5 new directories. Move them to a convenient location. We'll call that directory `nuimages_root`
+We now have 5 new directories. Move them to a convenient location. We'll call that directory `NUIM_ROOT`
 ```
-nuimages_root
+NUIM_ROOT
 ├── samples
 ├── v1.0-mini
 ├── v1.0-test
@@ -35,21 +35,65 @@ nuimages_root
 └── v1.0-val
 ```
 
+## Install Python packages
 
-## Install NuScenes Devkit
+```
+pip3 install -r requirements.txt
+```
 
-1. Go to https://github.com/nutonomy/nuscenes-devkit
-2. Clone the repository to download the tutorial jupyter notebook: `git clone git@github.com:nutonomy/nuscenes-devkit.git`
-3. Download the python package: `pip3 install nuscenes-devkit`
-4. Follow the 'nuImages' section of the README for a [tutorial](https://github.com/nutonomy/nuscenes-devkit#nuimages)
+## Run script
 
-## Install YOLOv8
+Two arguments are required:
++ `--nuim-root`: The directory where nuimages metadata and samples directories are located. Path to `NUIM_ROOT` above
 
-The [ultralytics/ultralytics](https://github.com/ultralytics/ultralytics) library provides all of the functionality we need as a command line tool, without touching any real code.
+```
+python3 convert.py --nuim-root=/path/to/NUIM_ROOT
+```
 
+Live progress bars will be shown. The total runtime is less than 1 minute
+
+Typical output:
+```
+$ python3 convert.py --nuim-root ~/DatasetsPublic/nuimages-full
+INFO:root:Creating output directories at: nuImagesYoloDataset...
+INFO:root:Moving train images...
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 67279/67279 [00:04<00:00, 14277.85it/s]
+INFO:root:Moving val images...
+100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 16445/16445 [00:01<00:00, 14548.88it/s]
+INFO:root:Moving test images...
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9752/9752 [00:00<00:00, 14908.98it/s]
+INFO:root:Converting and writing train annotations...
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 557715/557715 [00:21<00:00, 25911.76it/s]
+INFO:root:Converting and writing val annotations...
+100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 136074/136074 [00:04<00:00, 28257.51it/s]
+INFO:root:Done! Results in output directory: nuImagesYoloDataset
+```
+
+The `nuImagesYoloDataset` directory contains everything you need to train YOLov8.
+
+## Train YOLOv8
+
+Install Python library / CLI tool for YOLOv8:
 ```
 pip3 install ultralytics
 ```
+
+As an example, we'll train a YOLOv8n model on our newly created dataset:
+```
+yolo detect train data=nuImagesYoloDataset/nuimages.yaml model=yolov8n.pt epochs=100 imgsz=640
+```
+
+# Development Help & Implementation Details
+
+## Install NuScenes Devkit
+
+`convert.py` uses `from nuimages import NuImages` package to read annotation data.
+
+A tutorial for that package is available at: https://github.com/nutonomy/nuscenes-devkit
+
+1. Clone the repository to download the tutorial jupyter notebook: `git clone git@github.com:nutonomy/nuscenes-devkit.git`
+2. Download the python package: `pip3 install nuscenes-devkit`
+3. Follow the 'nuImages' section of the README for a [tutorial](https://github.com/nutonomy/nuscenes-devkit#nuimages)
 
 ## Creating a new dataset format 
 
@@ -97,9 +141,6 @@ nuImages Category(s) | nuImages Attribute(s) | YOLO Category
 `vehicle.motorcycle` | `cycle.without_rider` | `motorcycle`
 `vehicle.trailer` | any | none; Too broad (for trucks, cars, bikes)
 `vehicle.truck` | any | `truck`
-
-
-Bounding box [xmin, ymin, xmax, ymax]
 
 ### Overall Strategy
 x
