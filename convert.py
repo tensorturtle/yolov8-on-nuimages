@@ -104,7 +104,7 @@ def convert_set_ann(set_type, nuim_root: Path, output_root: Path):
 if __name__ == "__main__":
     argparse = ArgumentParser()
     argparse.add_argument("--nuim-root", required=True, help="Root directory of nuImages dataset where the directories 'samples', 'v1.0-train', 'v1.0-val'... are located.")
-    argparse.add_argument('--output-root', required=True, help='Output directory where the converted YOLO TXT dataset will be stored.')
+    argparse.add_argument('--output-root', required=False, default="nuImagesYoloDataset", help='Output directory where the converted YOLO TXT dataset will be stored.')
     argparse.add_argument('--only-images', action='store_true', help='Only move images, do not convert annotations.')
     argparse.add_argument('--only-annotations', action='store_true', help='Only convert annotations, do not move images.')
 
