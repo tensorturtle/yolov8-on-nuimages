@@ -100,3 +100,6 @@ nuImages Category(s) | nuImages Attribute(s) | YOLO Category
 
 
 Bounding box [xmin, ymin, xmax, ymax]
+
+### Overall Strategy
+x

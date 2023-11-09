@@ -1,0 +1,3 @@
+nuimages
+tqdm
+numpy
