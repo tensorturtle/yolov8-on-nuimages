@@ -155,3 +155,20 @@ nuImages Category(s) | nuImages Attribute(s) | YOLO Category
 # Future Features
 
 + [ ] Segmentation
+
+# Training on a different machine
+
+Copy over
+
++ `nuImagesYoloDataset.tar` - run `tar -cvf nuImagesYoloDataset` on the directory that was created in the convert step.
++ `train.sh`
+
+Install `pip3 install ultralytics`
+
+Potentially required stuff that might be necessary:
+```
+apt-get update
+apt-get install -y libgl1
+```
+
+Run `train.sh`

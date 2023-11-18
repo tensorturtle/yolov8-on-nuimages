@@ -2,37 +2,34 @@ from enum import Enum, auto
 
 # Single level categories like YOLO
 class NuImageSimpleCategory(Enum):
-    pedestrian = 0
-    cyclist = auto()
-    car = auto()
-    bus = auto()
-    truck = auto()
-    ambulance = auto()
-    uprightmobility = auto()
-    stroller = auto()
-    wheelchair = auto()
-    bicycle = auto()
-    motorcyclist = auto()
-    motorcycle = auto()
+    pedestrian = 0 # standing, walking
+    non_pedestrian = auto() # sitting, lying down
+    cyclist = auto() # person on two-wheeled, pedal-powered (or assisted) vehicle
+    car = auto() # family car, SUV under 9 seats
+    large_car = auto() # truck, bus, etc.
+    scooter = auto() # standing two-wheeled, non-pedal-powered electric vehicle
+    bicycle = auto() # the bike only with no person riding it
+    motorcyclist = auto() # person on two-wheeled, motor-powered vehicle with no pedals
+    motorcycle = auto() # the motorbike only with no person riding it
 
 # Convert nuImages category & attibute to YOLO-like category (above)
 attribute_aware_class_mapping = {
     'animal': None,
     'human.pedestrian.adult': {
-        'pedestrian.sitting_lying_down': None,
+        'pedestrian.sitting_lying_down': 'non_pedestrian',
         'pedestrian.moving': 'pedestrian',
         'pedestrian.standing': 'pedestrian',
     },
     'human.pedestrian.child': {
-        'pedestrian.sitting_lying_down': None,
+        'pedestrian.sitting_lying_down': 'non_pedestrian',
         'pedestrian.moving': 'pedestrian',
         'pedestrian.standing': 'pedestrian',
     },
     'human.pedestrian.construction_worker': 'pedestrian',
-    'human.pedestrian.personal_mobility': 'uprightmobility',
+    'human.pedestrian.personal_mobility': 'scooter',
     'human.pedestrian.police_officer': 'pedestrian',
-    'human.pedestrian.stroller': 'stroller',
-    'human.pedestrian.wheelchair': 'wheelchair',
+    'human.pedestrian.stroller': None,
+    'human.pedestrian.wheelchair': 'non_pedestrian',
     'movable_object.barrier': None,
     'movable_object.pushable_pullable': None,
     'movable_object.debris': None,
@@ -42,19 +39,19 @@ attribute_aware_class_mapping = {
         'cycle.with_rider': 'cyclist',
         'cycle.without_rider': 'bicycle',
     },
-    'vehicle.bus.bendy': 'bus',
-    'vehicle.bus.rigid': 'bus',
+    'vehicle.bus.bendy': 'large_car',
+    'vehicle.bus.rigid': 'large_car',
     'vehicle.car': 'car',
     'vehicle.construction': None,
     'vehicle.ego': None,
-    'vehicle.emergency.ambulance': 'ambulance',
-    'vehicle.emergency.police': None,
+    'vehicle.emergency.ambulance': 'large_car',
+    'vehicle.emergency.police': 'car',
     'vehicle.motorcycle': {
         'cycle.with_rider': 'motorcyclist',
         'cycle.without_rider': 'motorcycle',
     },
-    'vehicle.trailer': None,
-    'vehicle.truck': 'truck'
+    'vehicle.trailer': 'large_car',
+    'vehicle.truck': 'large_car'
 }
 
 def simplify_nuimage_labels(category, attribute):

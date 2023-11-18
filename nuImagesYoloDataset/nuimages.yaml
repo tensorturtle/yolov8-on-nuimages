@@ -9,19 +9,15 @@
 path: ../nuImagesYoloDataset # dataset root dir
 train: train # train images (relative to 'path') 118287 images
 val: val # val images (relative to 'path') 5000 images
-  #test: test-dev2017.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
 # Classes
 names:
-  0: pedestrian 
-  1: cyclist
-  2: car
-  3: bus
-  4: truck 
-  5: ambulance
-  6: uprightmobility
-  7: stroller
-  8: wheelchair
-  9: bicycle
-  10: motorcyclist
-  11: motorcycle
+  0: pedestrian
+  1: non_pedestrian
+  2: cyclist
+  3: car
+  4: large_car 
+  5: scooter
+  6: bicycle
+  7: motorcyclist
+  8: motorcycle

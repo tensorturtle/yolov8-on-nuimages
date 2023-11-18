@@ -1,3 +1,8 @@
+datasets/
+nuImagesYoloDataset/train/
+nuImagesYoloDataset/val/
+nuImagesYoloDataset/test/
+nuImagesYoloDataset.tar
 runs/
 *.pt
 
