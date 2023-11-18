@@ -169,6 +169,7 @@ Potentially required stuff that might be necessary:
 ```
 apt-get update
 apt-get install -y libgl1
+pip3 install -U numpy # on multi-GPU systems
 ```
 
 Run `train.sh`
