@@ -79,7 +79,11 @@ INFO:root:Converting and writing val annotations...
 INFO:root:Done! Results in output directory: nuImagesYoloDataset
 ```
 
-The `nuImagesYoloDataset` directory contains everything you need to train YOLOv8.
+The `nuImagesYoloDataset` directory contains everything you need to train YOLOv8 as a YOLO TXT dataset format.
+
+## Add fine-tuning dataset
+
+At this point, add additional datasets using the same categories and format into the `train/images` and `train/labels` directories.
 
 ## Train YOLOv8
 
