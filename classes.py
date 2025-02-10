@@ -54,6 +54,54 @@ attribute_aware_class_mapping = {
     'vehicle.truck': 'large_car'
 }
 
+class NuImageSimplerCategory(Enum):
+    person = 0
+    cyclist = auto()
+    car = auto()
+    motorcyclist = auto()
+
+# Convert nuImages category & attibute to YOLO-like category (above)
+simpler_class_mapping = {
+    'animal': None,
+    'human.pedestrian.adult': {
+        'pedestrian.sitting_lying_down': 'person',
+        'pedestrian.moving': 'person',
+        'pedestrian.standing': 'person',
+    },
+    'human.pedestrian.child': {
+        'pedestrian.sitting_lying_down': 'person',
+        'pedestrian.moving': 'person',
+        'pedestrian.standing': 'person',
+    },
+    'human.pedestrian.construction_worker': 'person',
+    'human.pedestrian.personal_mobility': 'person',
+    'human.pedestrian.police_officer': 'person',
+    'human.pedestrian.stroller': None,
+    'human.pedestrian.wheelchair': 'person',
+    'movable_object.barrier': None,
+    'movable_object.pushable_pullable': None,
+    'movable_object.debris': None,
+    'movable_object.trafficcone': None,
+    'static_object.bicycle_rack': None,
+    'vehicle.bicycle': {
+        'cycle.with_rider': 'cyclist',
+        'cycle.without_rider': None,
+    },
+    'vehicle.bus.bendy': 'car',
+    'vehicle.bus.rigid': 'car',
+    'vehicle.car': 'car',
+    'vehicle.construction': None,
+    'vehicle.ego': None,
+    'vehicle.emergency.ambulance': 'car',
+    'vehicle.emergency.police': 'car',
+    'vehicle.motorcycle': {
+        'cycle.with_rider': 'motorcyclist',
+        'cycle.without_rider': None,
+    },
+    'vehicle.trailer': 'car',
+    'vehicle.truck': 'car'
+}
+
 # The simplest YOLO categoris
 class NuImageSimplestCategory(Enum):
     person = 0 # people
@@ -100,19 +148,27 @@ super_simple_class_mapping = {
     'vehicle.truck': 'vehicle'
 }
 
-def simplify_nuimage_labels(category, attribute, super_simple_label):
+class LabelMappingTypes(Enum):
+    FAITHFUL = 0
+    SIMPLER = auto()
+    SIMPLEST = auto()
+
+def simplify_nuimage_labels(category, attribute, label_mapping_type):
     '''
     Convert nuImage label categories into flat labels for YOLO
 
     Args:
-        super_simple_label (bool): Optionally make labels really simple, into pedestrian and vehicle classes only.
+        label_mapping_type (str): "FAITHFUL", "SIMPLER", or "SIMPLEST", corresponding to how we group nuImages categories
     '''
     assert category in attribute_aware_class_mapping, f"Category: {category} not found in mapping"
 
-    if super_simple_label:
-        mapp = super_simple_class_mapping[category]
-    else:
-        mapp = attribute_aware_class_mapping[category]
+    match label_mapping_type:
+        case LabelMappingTypes.FAITHFUL.name:
+            mapp = attribute_aware_class_mapping[category]
+        case LabelMappingTypes.SIMPLER.name:
+            mapp = simpler_class_mapping[category]
+        case LabelMappingTypes.SIMPLEST.name:
+            mapp = super_simple_class_mapping[category]
 
     if mapp is None:
         # ignore label

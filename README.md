@@ -184,11 +184,12 @@ Run `train.sh`
 
 This section was created 1 year after most of the above was created. 
 Upon reviewing the dataset use in practice, it was determined that the categories can be simplified further.
-Therefore code was added to simplify the nuImages categories into just two: person and vehicle.
+
+The `--label-mapping` allows you to specify either FAITHFUL, SIMPLER (4 categories), and SIMPLEST (2 categories).
 
 To use this binary category system:
 ```
-python3 convert.py --nuim-root=/abs/path/to/NUIM_ROOT --super-simple-labels
+python3 convert.py --nuim-root=/abs/path/to/NUIM_ROOT --label-mapping SIMPLER
 ```
 
 
