@@ -62,6 +62,8 @@ python3 convert.py --nuim-root=/abs/path/to/NUIM_ROOT
 
 Live progress bars will be shown. The total runtime is less than 1 minute
 
+NOTE: This script 'mv's the files to their new directories. If something went wrong and you need to run it again, you need to start from the `tar -xvf` part to restore the files in the nuim root.
+
 Typical output:
 ```
 $ python3 convert.py --nuim-root=/home/tensorturtle/DatasetsPublic/nuimages-full
@@ -177,3 +179,16 @@ pip3 install -U numpy # on multi-GPU systems
 ```
 
 Run `train.sh`
+
+# Later Updates
+
+This section was created 1 year after most of the above was created. 
+Upon reviewing the dataset use in practice, it was determined that the categories can be simplified further.
+Therefore code was added to simplify the nuImages categories into just two: person and vehicle.
+
+To use this binary category system:
+```
+python3 convert.py --nuim-root=/abs/path/to/NUIM_ROOT --super-simple-labels
+```
+
+

@@ -54,10 +54,65 @@ attribute_aware_class_mapping = {
     'vehicle.truck': 'large_car'
 }
 
-def simplify_nuimage_labels(category, attribute):
+# The simplest YOLO categoris
+class NuImageSimplestCategory(Enum):
+    person = 0 # people
+    vehicle = 1 # people on things that make them move
+
+super_simple_class_mapping = {
+    'animal': None,
+    'human.pedestrian.adult': {
+        'pedestrian.sitting_lying_down': 'person',
+        'pedestrian.moving': 'person',
+        'pedestrian.standing': 'person',
+    },
+    'human.pedestrian.child': {
+        'pedestrian.sitting_lying_down': 'person',
+        'pedestrian.moving': 'person',
+        'pedestrian.standing': 'person',
+    },
+    'human.pedestrian.construction_worker': 'person',
+    'human.pedestrian.personal_mobility': 'person', # somewhat exceptional, scooters and such are relatively smaller than people and also tesla classifies them as just people so we do that too.
+    'human.pedestrian.police_officer': 'person',
+    'human.pedestrian.stroller': None,
+    'human.pedestrian.wheelchair': 'person',
+    'movable_object.barrier': None,
+    'movable_object.pushable_pullable': None,
+    'movable_object.debris': None,
+    'movable_object.trafficcone': None,
+    'static_object.bicycle_rack': None,
+    'vehicle.bicycle': {
+        'cycle.with_rider': 'vehicle',
+        'cycle.without_rider': None,
+    },
+    'vehicle.bus.bendy': 'vehicle',
+    'vehicle.bus.rigid': 'vehicle',
+    'vehicle.car': 'vehicle',
+    'vehicle.construction': None,
+    'vehicle.ego': None,
+    'vehicle.emergency.ambulance': 'vehicle',
+    'vehicle.emergency.police': 'vehicle',
+    'vehicle.motorcycle': {
+        'cycle.with_rider': 'vehicle',
+        'cycle.without_rider': None,
+    },
+    'vehicle.trailer': 'vehicle',
+    'vehicle.truck': 'vehicle'
+}
+
+def simplify_nuimage_labels(category, attribute, super_simple_label):
+    '''
+    Convert nuImage label categories into flat labels for YOLO
+
+    Args:
+        super_simple_label (bool): Optionally make labels really simple, into pedestrian and vehicle classes only.
+    '''
     assert category in attribute_aware_class_mapping, f"Category: {category} not found in mapping"
 
-    mapp = attribute_aware_class_mapping[category]
+    if super_simple_label:
+        mapp = super_simple_class_mapping[category]
+    else:
+        mapp = attribute_aware_class_mapping[category]
 
     if mapp is None:
         # ignore label

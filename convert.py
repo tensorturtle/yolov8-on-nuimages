@@ -6,7 +6,7 @@ import numpy as np
 from argparse import ArgumentParser
 
 from utils import PxyXY_to_Nxcycwh
-from classes import simplify_nuimage_labels, NuImageSimpleCategory
+from classes import simplify_nuimage_labels, NuImageSimpleCategory, NuImageSimplestCategory
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
@@ -57,7 +57,7 @@ def get_filename_no_suffix(annotation, nuim):
     sample_data = nuim.get("sample_data", sample_data_token)
     return Path(sample_data['filename']).with_suffix('').name
 
-def convert_annotation(annotation, nuim):
+def convert_annotation(annotation, nuim, super_simple_label):
     xyXY = annotation['bbox']
 
     # odd dataset bug where there is no mask
@@ -74,32 +74,35 @@ def convert_annotation(annotation, nuim):
         attribute = nuim.get('attribute', attribute_token)['name']
     else:
         attribute = None
-    
-    yolo_cat = simplify_nuimage_labels(nu_cat, attribute)
+
+    yolo_cat = simplify_nuimage_labels(nu_cat, attribute, super_simple_label)
 
     filename_no_suffix = get_filename_no_suffix(annotation, nuim)
 
     return yolo_cat, yolo_bbox, filename_no_suffix
 
-def append_txt(cat: str, bbox: list, filename_no_suffix: str, set_type: str, output_root: Path):
-    pa = output_root / set_type / 'labels' 
+def append_txt(cat: str, bbox: list, filename_no_suffix: str, set_type: str, output_root: Path, super_simple_label: bool):
+    pa = output_root / set_type / 'labels'
     fi = (pa / filename_no_suffix).with_suffix('.txt')
 
-    cat_index = NuImageSimpleCategory[cat].value
+    if super_simple_label:
+        cat_index = NuImageSimplestCategory[cat].value
+    else:
+        cat_index = NuImageSimpleCategory[cat].value
 
     xc, yc, w, h = bbox
 
     with open(fi, 'a') as f:
         f.write(f"{cat_index} {xc} {yc} {w} {h}\n")
 
-def convert_set_ann(set_type, nuim_root: Path, output_root: Path):
+def convert_set_ann(set_type, nuim_root: Path, output_root: Path, super_simple_label):
     nuim = NuImages(dataroot=nuim_root.resolve(), version=f"v1.0-{set_type}", verbose=False, lazy=True)
 
     for annotation in tqdm(nuim.object_ann):
-        cat, bbox, filename_no_suffix = convert_annotation(annotation, nuim)
+        cat, bbox, filename_no_suffix = convert_annotation(annotation, nuim, super_simple_label)
         if cat is None:
             continue
-        append_txt(cat, bbox, filename_no_suffix, set_type, output_root)
+        append_txt(cat, bbox, filename_no_suffix, set_type, output_root, super_simple_label)
 
 if __name__ == "__main__":
     argparse = ArgumentParser()
@@ -107,6 +110,7 @@ if __name__ == "__main__":
     argparse.add_argument('--output-root', required=False, default="nuImagesYoloDataset", help='Output directory where the converted YOLO TXT dataset will be stored.')
     argparse.add_argument('--only-images', action='store_true', help='Only move images, do not convert annotations.')
     argparse.add_argument('--only-annotations', action='store_true', help='Only convert annotations, do not move images.')
+    argparse.add_argument('--super-simple-labels', action='store_true', help='Just two categories: pedestrian and vehicle')
 
     args = argparse.parse_args()
 
@@ -135,7 +139,7 @@ NUIM_ROOT
 
     if Path(args.output_root).exists():
         logger.warning("Output directory already exists. Files may be overwritten or appended.")
-    
+
     Path(args.output_root).mkdir(parents=True, exist_ok=True)
 
     mkdir_output_dirs(Path(args.output_root))
@@ -144,7 +148,7 @@ NUIM_ROOT
         logger.info("Only moving images.")
         for set_type in ["train", "val", "test"]:
             move_set(set_type, Path(args.nuim_root), Path(args.output_root))
-        
+
         logger.info(f"Done! Results in output directory: {Path(args.output_root)}")
         exit(0)
 
@@ -152,17 +156,17 @@ NUIM_ROOT
         # obviously, "test" has no annotations
         logger.info("Only converting and writing annotations.")
         for set_type in ["train", "val"]:
-            convert_set_ann(set_type, Path(args.nuim_root), Path(args.output_root))
+            convert_set_ann(set_type, Path(args.nuim_root), Path(args.output_root), args.super_simple_labels)
         logger.info(f"Done! Results in output directory: {Path(args.output_root)}")
         exit(0)
 
     for set_type in ["train", "val", "test"]:
         logger.info(f"Moving {set_type} images...")
         move_set(set_type, Path(args.nuim_root), Path(args.output_root))
-    
+
     for set_type in ["train", "val"]:
         # obviously, "test" has no annotations
         logger.info(f"Converting and writing {set_type} annotations...")
-        convert_set_ann(set_type, Path(args.nuim_root), Path(args.output_root))
-    
+        convert_set_ann(set_type, Path(args.nuim_root), Path(args.output_root), args.super_simple_labels)
+
     logger.info(f"Done! Results in output directory: {Path(args.output_root)}")
