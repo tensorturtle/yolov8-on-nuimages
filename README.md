@@ -99,6 +99,34 @@ As an example, we'll train a YOLOv8n model on our newly created dataset:
 yolo detect train data=nuImagesYoloDataset/nuimages.yaml model=yolov8n.pt epochs=100 imgsz=640
 ```
 
+The `nuimages.yaml` is as follows (edit paths and such to fit your use):
+```
+# NuImages 2D Bounding Box Detection Dataset
+# by https://www.nuscenes.org/nuimages by nuScenes (Motional)
+# adapted for ultralytics YOLOv8 by @tensorturtle
+
+# Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
+path: /home/tensorturtle/DatasetMine/nuImagesYOLOTXT # dataset root dir
+train: train # train images (relative to 'path') 118287 images
+val: val # val images (relative to 'path') 5000 images
+  #test: test-dev2017.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
+
+# Classes
+names:
+  0: pedestrian
+  1: cyclist
+  2: car
+  3: bus
+  4: truck
+  5: ambulance
+  6: uprightmobility
+  7: stroller
+  8: wheelchair
+  9: bicycle
+  10: motorcyclist
+  11: motorcycle
+```
+
 # Development Help & Implementation Details
 
 ## Install NuScenes Devkit
