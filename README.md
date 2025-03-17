@@ -8,6 +8,8 @@ We will use the 2D bounding box annotations to train YOLOv8's detection model. W
 
 This guide was created on PopOS 22.04 with NVIDIA RTX2070S GPU. It is expected to work identically with Ubuntu and other Linux distros.
 
+Since this repo was initially created, Ultralytics has upgraded to YOLOv11, but most of the code structure and functionality is the same (it's just a neural network architectural change) so everything should work the same.
+
 ## Clone this repository
 
 ```
